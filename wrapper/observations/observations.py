@@ -19,7 +19,6 @@ def obs2tensor(observation: dict) -> np.array:
             [10:13, :, :] - player #4
 
     """
-    del observation
     return None
 
 
@@ -33,8 +32,20 @@ def _get_halite(observation: dict) -> np.array:
     Returns:
         np.array: (21, 21) shaped array in 0-1 range.
     """
-    shape = len(observation["observation"]["halite"]) ** 0.5
-    assert shape == int(shape)
-    shape = int(shape)
+    shape = _get_shape(observation)
     return np.array(observation["observation"]["halite"]).reshape(shape, shape) / 500
 
+
+def _get_shape(observation: dict) -> int:
+    """
+    Get the shape of a board.
+
+    Args:
+        observation (dict): [description]
+
+    Returns:
+        int: shape
+    """
+    shape = len(observation["observation"]["halite"]) ** 0.5
+    assert shape == int(shape)
+    return int(shape)

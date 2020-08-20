@@ -1,4 +1,7 @@
+# pylint: disable=import-error
+# pylint: disable=protected-access
 # pylint: disable=redefined-outer-name
+
 import numpy as np
 import pytest
 from kaggle_environments import make
@@ -33,6 +36,13 @@ def test__get_halite(env):
         )
         / 500
     )
-    observation = env.state[0]
-    result = observations._get_halite(observation)  # pylint: disable=protected-access
+    obs = env.state[0]
+    result = observations._get_halite(obs)
     np.testing.assert_array_equal(expected_result, result)
+
+
+def test__get_shape(env):
+    expected_result = 5
+    obs = env.state[0]
+    result = observations._get_shape(obs)
+    assert expected_result == result
