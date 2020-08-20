@@ -33,7 +33,8 @@ def _get_halite(observation: dict) -> np.array:
     Returns:
         np.array: (21, 21) shaped array in 0-1 range.
     """
-    del observation
-    # np.array(board.observation["halite"]).reshape(21, 21)
-    return None
+    shape = len(observation["observation"]["halite"]) ** 0.5
+    assert shape == int(shape)
+    shape = int(shape)
+    return np.array(observation["observation"]["halite"]).reshape(shape, shape) / 500
 
