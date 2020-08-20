@@ -36,20 +36,20 @@ def test__get_halite(env):
         )
         / 500
     )
-    obs = env.state[0]
+    obs = env.state[0]["observation"]
     result = observations._get_halite(obs)
     np.testing.assert_array_equal(expected_result, result)
 
 
 def test__get_shape(env):
     expected_result = 5
-    obs = env.state[0]
+    obs = env.state[0]["observation"]
     result = observations._get_shape(obs)
     assert expected_result == result
 
 
 def test__get_player_no(env):
     expected_result = 4
-    state = env.state
-    result = observations._get_player_no(state)
+    obs = env.state[0]["observation"]
+    result = observations._get_player_no(obs)
     assert expected_result == result

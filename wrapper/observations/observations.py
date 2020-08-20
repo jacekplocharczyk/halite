@@ -33,7 +33,7 @@ def _get_halite(obs: dict) -> np.array:
         np.array: (21, 21) shaped array in 0-1 range.
     """
     shape = _get_shape(obs)
-    return np.array(obs["observation"]["halite"]).reshape(shape, shape) / 500
+    return np.array(obs["halite"]).reshape(shape, shape) / 500
 
 
 def _get_players_state(obs: dict) -> np.array:
@@ -50,19 +50,20 @@ def _get_shape(obs: dict) -> int:
     Returns:
         int: shape
     """
-    shape = len(obs["observation"]["halite"]) ** 0.5
+    shape = len(obs["halite"]) ** 0.5
     assert shape == int(shape)
     return int(shape)
 
 
-def _get_player_no(state: list) -> int:
+def _get_player_no(obs: dict) -> int:
     """
     Get the number of players.
 
     Args:
-        state (list): [description]
+        observation (dict): [description]
 
     Returns:
         int: players number
     """
-    return len(state)
+    players = obs["players"]
+    return len(players)
