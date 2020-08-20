@@ -36,6 +36,10 @@ def _get_halite(obs: dict) -> np.array:
     return np.array(obs["observation"]["halite"]).reshape(shape, shape) / 500
 
 
+def _get_players_state(obs: dict) -> np.array:
+    pass
+
+
 def _get_shape(obs: dict) -> int:
     """
     Get the shape of a board.
@@ -49,3 +53,16 @@ def _get_shape(obs: dict) -> int:
     shape = len(obs["observation"]["halite"]) ** 0.5
     assert shape == int(shape)
     return int(shape)
+
+
+def _get_player_no(state: list) -> int:
+    """
+    Get the number of players.
+
+    Args:
+        state (list): [description]
+
+    Returns:
+        int: players number
+    """
+    return len(state)

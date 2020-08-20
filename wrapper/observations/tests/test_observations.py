@@ -46,3 +46,10 @@ def test__get_shape(env):
     obs = env.state[0]
     result = observations._get_shape(obs)
     assert expected_result == result
+
+
+def test__get_player_no(env):
+    expected_result = 4
+    state = env.state
+    result = observations._get_player_no(state)
+    assert expected_result == result
