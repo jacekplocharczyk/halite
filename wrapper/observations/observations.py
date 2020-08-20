@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def obs2tensor(observation: dict) -> np.array:
+def obs2tensor(obs: dict) -> np.array:
     """
     Convert observation from the envionment into 3D tensor.
 
@@ -22,7 +22,7 @@ def obs2tensor(observation: dict) -> np.array:
     return None
 
 
-def _get_halite(observation: dict) -> np.array:
+def _get_halite(obs: dict) -> np.array:
     """
     Convert halite list into 2D tensor.
 
@@ -32,11 +32,11 @@ def _get_halite(observation: dict) -> np.array:
     Returns:
         np.array: (21, 21) shaped array in 0-1 range.
     """
-    shape = _get_shape(observation)
-    return np.array(observation["observation"]["halite"]).reshape(shape, shape) / 500
+    shape = _get_shape(obs)
+    return np.array(obs["observation"]["halite"]).reshape(shape, shape) / 500
 
 
-def _get_shape(observation: dict) -> int:
+def _get_shape(obs: dict) -> int:
     """
     Get the shape of a board.
 
@@ -46,6 +46,6 @@ def _get_shape(observation: dict) -> int:
     Returns:
         int: shape
     """
-    shape = len(observation["observation"]["halite"]) ** 0.5
+    shape = len(obs["observation"]["halite"]) ** 0.5
     assert shape == int(shape)
     return int(shape)
