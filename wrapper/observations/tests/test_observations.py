@@ -41,8 +41,50 @@ def board(env):
 
 
 def test_obs2tensor(board):
+    halite = (
+        np.array(
+            [[
+                [0, 375, 246.794, 500, 0],
+                [0, 0, 0, 199, 0],
+                [500, 35.72, 6.494, 35.72, 500],
+                [0, 199, 0, 199, 0],
+                [0, 500, 246.794, 500, 0],
+            ]]
+        )
+        / 500
+    )
+    first_player = np.array(
+        [
+            [
+                [0, 1, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+            ],
+            [
+                [0, 125, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+            ],
+            [
+                [0, 0, 0, 0, 0],
+                [0, 1, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+            ],
+        ],
+        dtype=float,
+    )
+    expected_result = np.concatenate((halite, first_player))
+    obs = board.observation
 
-    assert False
+    result = observations.obs2tensor(obs)
+    # checking only the first player
+    np.testing.assert_array_equal(expected_result, result[:4])
 
 
 def test__get_halite(initial_board):

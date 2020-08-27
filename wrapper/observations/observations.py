@@ -21,7 +21,13 @@ def obs2tensor(obs: dict) -> np.array:
             [10:13, :, :] - player #4
 
     """
-    return None
+    shape = _get_shape(obs)
+    players_no = _get_player_no(obs)
+
+    tensor = np.empty((3 * players_no + 1, shape, shape))
+    tensor[0] = _get_halite(obs)
+    tensor[1:] = _get_players_state(obs)
+    return tensor
 
 
 def _get_halite(obs: dict) -> np.array:
