@@ -30,7 +30,7 @@ def board(env):
     state = env.state
     board = Board(state[0].observation, env.configuration)
     board.ships["0-1"].next_action = ShipAction.CONVERT
-    board = board.next()
+    board = board.next()  # pylint: disable=not-callable
     board.shipyards["1-1"].next_action = ShipyardAction.SPAWN
     board = board.next()
     board.ships["2-1"].next_action = ShipAction.NORTH
@@ -43,13 +43,15 @@ def board(env):
 def test_obs2tensor(board):
     halite = (
         np.array(
-            [[
-                [0, 375, 246.794, 500, 0],
-                [0, 0, 0, 199, 0],
-                [500, 35.72, 6.494, 35.72, 500],
-                [0, 199, 0, 199, 0],
-                [0, 500, 246.794, 500, 0],
-            ]]
+            [
+                [
+                    [0, 375, 246.794, 500, 0],
+                    [0, 0, 0, 199, 0],
+                    [500, 35.72, 6.494, 35.72, 500],
+                    [0, 199, 0, 199, 0],
+                    [0, 500, 246.794, 500, 0],
+                ]
+            ]
         )
         / 500
     )
@@ -130,14 +132,35 @@ def test__get_players_state(board):
                 [0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0],
             ],
+            [
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 1, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+            ],
+            [
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 427, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+            ],
+            [
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+            ],
         ],
         dtype=float,
     )
     obs = board.observation
 
     result = observations._get_players_state(obs)
-    # checking only the first player
-    np.testing.assert_array_equal(expected_result, result[:3])
+    # checking only the two first players
+    np.testing.assert_array_equal(expected_result, result[:6])
 
 
 def test__get_shape(board):
@@ -207,4 +230,3 @@ def test_int2pos(position_value, shape, expected_result):
     result = observations.int2pos(position_value, shape)
     assert result[0] == expected_result[0]
     assert result[1] == expected_result[1]
-
