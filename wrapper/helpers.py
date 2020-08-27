@@ -51,7 +51,7 @@ def ship_actions() -> list:
     return actions
 
 
-def shipyard_action() -> list:
+def shipyard_actions() -> list:
     actions = list(ShipyardAction)
     actions.append(None)
     return actions
