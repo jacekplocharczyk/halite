@@ -65,7 +65,37 @@ def test__get_halite(initial_board):
 
 
 def test__get_players_state(board):
-    assert False
+    expected_result = np.array(
+        [
+            [
+                [0, 1, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+            ],
+            [
+                [0, 125, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+            ],
+            [
+                [0, 0, 0, 0, 0],
+                [0, 1, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+            ],
+        ],
+        dtype=float,
+    )
+    obs = board.observation
+
+    result = observations._get_players_state(obs)
+    # checking only the first player
+    np.testing.assert_array_equal(expected_result, result[:3])
 
 
 def test__get_shape(board):
@@ -105,14 +135,26 @@ def test__get_ship_cargos_and_positions(board):
     obs = board.observation
 
     player_data = obs["players"][0]
-    print(player_data)
     result = observations._get_ship_cargos_and_positions(player_data, 5)
-    print(result)
     np.testing.assert_array_equal(expected_result, result)
 
 
 def test__get_shipyard_positions(board):
-    assert False
+    expected_result = np.array(
+        [
+            [0, 0, 0, 0, 0],
+            [0, 1, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+        ],
+        dtype=float,
+    )
+    obs = board.observation
+
+    player_data = obs["players"][0]
+    result = observations._get_shipyard_positions(player_data, 5)
+    np.testing.assert_array_equal(expected_result, result)
 
 
 @pytest.mark.parametrize(

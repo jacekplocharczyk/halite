@@ -47,7 +47,7 @@ def _get_players_state(obs: dict) -> np.array:
         obs (dict): [description]
 
     Returns:
-        np.array: (13, 21, 21) shaped tensor. Descriptions:
+        np.array: (12, 21, 21) shaped tensor. Descriptions:
             [0, :, :] - player #1 ships
             [1, :, :] - player #1 halite on the ships
             [2, :, :] - player #1 shipyards
@@ -58,7 +58,7 @@ def _get_players_state(obs: dict) -> np.array:
     shape = _get_shape(obs)
     players_no = _get_player_no(obs)
     players_data = obs["players"]
-    players_state = np.empty(3 * players_no, shape, shape)
+    players_state = np.empty((3 * players_no, shape, shape))
     for i, player_data in enumerate(players_data):
         players_state[i * 3 : i * 3 + 2, :, :] = _get_ship_cargos_and_positions(
             player_data, shape
@@ -130,7 +130,13 @@ def _get_shipyard_positions(player_data: list, shape: int) -> np.array:
         np.array: (21, 21) shaped tensor with boolean information about the shipyards
             positons.
     """
-    pass
+    shipyards = player_data[1]
+    shipyards_tensor = np.zeros(shape=(shape, shape))
+    for position_value in shipyards.values():
+        x, y = int2pos(position_value, shape)
+        shipyards_tensor[y, x] = 1.0
+
+    return shipyards_tensor
 
 
 def int2pos(value: int, shape: int) -> Tuple[int, int]:
