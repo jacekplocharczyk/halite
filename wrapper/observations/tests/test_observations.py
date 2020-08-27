@@ -104,7 +104,7 @@ def test__get_halite(initial_board):
         / 500
     )
     obs = initial_board.observation
-    result = observations._get_halite(obs)
+    result = observations._get_halite(obs, shape=5)
     np.testing.assert_array_equal(expected_result, result)
 
 
@@ -158,7 +158,7 @@ def test__get_players_state(board):
     )
     obs = board.observation
 
-    result = observations._get_players_state(obs)
+    result = observations._get_players_state(obs, shape=5, players_no=4)
     # checking only the two first players
     np.testing.assert_array_equal(expected_result, result[:6])
 
